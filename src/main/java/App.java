@@ -6,6 +6,9 @@ public class App {
         String paczkomat = "";
         Scanner scanner = new Scanner(System.in);
         while (true) {
+            if(scanner.hasNextLine()){
+                return;
+            }
             String line = scanner.nextLine();
             if (line.equals("")) {
                 System.out.println(paczkomat);
@@ -19,6 +22,9 @@ public class App {
         }
         //S - wyświetla paczkomat (nie ma tego w dokumentacji XD)
         while (true) {
+            if(!scanner.hasNextLine()) {
+                return;
+            }
             String command = scanner.nextLine();
             String[] split = command.split(";");
             if (command.equals("")) {
