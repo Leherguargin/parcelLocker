@@ -9,7 +9,6 @@ public class App {
             String line = scanner.nextLine();
             if (line.equals("")) {
                 System.out.println(paczkomat);
-//                System.out.println("koniec wczytywania paczkomatu :D");
                 break;
             } else {
                 if (!paczkomat.equals("")) {
@@ -22,10 +21,13 @@ public class App {
         while (true) {
             String command = scanner.nextLine();
             String[] split = command.split(";");
+            if (command.equals("")) {
+                System.out.println(paczkomat);
+                break;
+            }
             if (command.equals("S")) {
                 System.out.println(paczkomat);
             } else {
-
                 for (String c : split) {
                     int index = paczkomat.indexOf("O");
                     if (index == -1) {
