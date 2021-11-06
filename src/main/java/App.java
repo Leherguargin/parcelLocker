@@ -11,7 +11,7 @@ public class App {
             }
             String line = scanner.nextLine();
             if (line.equals("")) {
-                System.out.println(paczkomat);
+//                System.out.println(paczkomat);
                 break;
             } else {
                 if (!paczkomat.equals("")) {
