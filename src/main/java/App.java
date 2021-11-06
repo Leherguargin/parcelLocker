@@ -6,7 +6,7 @@ public class App {
         String paczkomat = "";
         Scanner scanner = new Scanner(System.in);
         while (true) {
-            if(scanner.hasNextLine()){
+            if(!scanner.hasNextLine()){
                 return;
             }
             String line = scanner.nextLine();
