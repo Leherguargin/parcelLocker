@@ -48,27 +48,29 @@ public class App {
     }
 
     private static String wlozPaczke(String com, String paczkomat) {
-        switch (com) {
+        String comm = com.split("@")[0];
+        String name = "@" + com.split("@")[1];
+        switch (comm) {
             case "B":
                 //brak break; => to samo co dla BS się wykona :)
             case "BS":
-                if (paczkomat.contains("S:O")) {
-                    paczkomat = paczkomat.replaceFirst("S:O", "S:X");
+                if (paczkomat.contains("S:O" + name)) {
+                    paczkomat = paczkomat.replaceFirst("S:O" + name, "S:X" + name);
                 } else if (paczkomat.contains("M:O")) {
-                    paczkomat = paczkomat.replaceFirst("M:O", "M:S");
+                    paczkomat = paczkomat.replaceFirst("M:O" + name, "M:S" + name);
                 } else if (paczkomat.contains("L:O")) {
-                    paczkomat = paczkomat.replaceFirst("L:O", "L:S");
+                    paczkomat = paczkomat.replaceFirst("L:O" + name, "L:S" + name);
                 }
                 break;
             case "BM":
-                if (paczkomat.contains("M:O")) {
-                    paczkomat = paczkomat.replaceFirst("M:O", "M:X");
+                if (paczkomat.contains("M:O" + name)) {
+                    paczkomat = paczkomat.replaceFirst("M:O" + name, "M:X" + name);
                 } else if (paczkomat.contains("L:O")) {
-                    paczkomat = paczkomat.replaceFirst("L:O", "L:M");
+                    paczkomat = paczkomat.replaceFirst("L:O" + name, "L:M" + name);
                 }
                 break;
             case "BL":
-                if (paczkomat.contains("L:O")) {
+                if (paczkomat.contains("L:O" + name)) {
                     paczkomat = paczkomat.replaceFirst("L:O", "L:X");
                 }
                 break;
