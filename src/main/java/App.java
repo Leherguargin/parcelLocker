@@ -1,12 +1,13 @@
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class App {
     public static void main(String... args) {
         String paczkomat = "";
         Scanner scanner = new Scanner(System.in);
         while (true) {
-            if(!scanner.hasNextLine()){
+            if (!scanner.hasNextLine()) {
                 return;
             }
             String line = scanner.nextLine();
@@ -20,31 +21,59 @@ public class App {
                 paczkomat += line;
             }
         }
+        paczkomat = paczkomat
+                .replaceAll("L:L", "L:X")
+                .replaceAll("M:M", "M:X")
+                .replaceAll("S:S", "S:X");
         //S - wyświetla paczkomat (nie ma tego w dokumentacji XD)
         while (true) {
-            if(!scanner.hasNextLine()) {
+            if (!scanner.hasNextLine()) {
                 return;
             }
-            String command = scanner.nextLine();
-            String[] split = command.split(";");
-            if (command.equals("")) {
+            String commands = scanner.nextLine();
+            String[] com = commands.split(";");
+            if (commands.equals("")) {
                 System.out.println(paczkomat);
                 break;
             }
-            if (command.equals("S")) {
+            if (commands.equals("S")) {
                 System.out.println(paczkomat);
             } else {
-                for (String c : split) {
-                    int index = paczkomat.indexOf("O");
-                    if (index == -1) {
-                        //dodaj nowy rząd?
-                    } else {
-                        paczkomat = paczkomat.replaceFirst("O", "X");
-                    }
+                for (String c : com) {
+                    paczkomat = wlozPaczke(c, paczkomat);
                 }
                 System.out.println(paczkomat);
             }
         }
+    }
+
+    private static String wlozPaczke(String com, String paczkomat) {
+        switch (com) {
+            case "B":
+                //brak break; => to samo co dla BS się wykona :)
+            case "BS":
+                if (paczkomat.contains("S:O")) {
+                    paczkomat = paczkomat.replaceFirst("S:O", "S:X");
+                } else if (paczkomat.contains("M:O")) {
+                    paczkomat = paczkomat.replaceFirst("M:O", "M:S");
+                } else if (paczkomat.contains("L:O")) {
+                    paczkomat = paczkomat.replaceFirst("L:O", "L:S");
+                }
+                break;
+            case "BM":
+                if (paczkomat.contains("M:O")) {
+                    paczkomat = paczkomat.replaceFirst("M:O", "M:X");
+                } else if (paczkomat.contains("L:O")) {
+                    paczkomat = paczkomat.replaceFirst("L:O", "L:M");
+                }
+                break;
+            case "BL":
+                if (paczkomat.contains("L:O")) {
+                    paczkomat = paczkomat.replaceFirst("L:O", "L:X");
+                }
+                break;
+        }
+        return paczkomat;
     }
 
 }
