@@ -1,5 +1,6 @@
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -9,18 +10,16 @@ public class App {
         String paczkomat = "";
         Scanner scanner = new Scanner(System.in);
         while (true) {
-            if (!scanner.hasNextLine()) {
-                return;
-            }
-            String line = scanner.nextLine();
-            if (line.equals("")) {
-//                System.out.println(paczkomat);
-                break;
-            } else {
-                if (!paczkomat.equals("")) {
-                    paczkomat += '\n';
+            if (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                if (line.equals("")) {
+                    break;
+                } else {
+                    if (!paczkomat.equals("")) {
+                        paczkomat += '\n';
+                    }
+                    paczkomat += line;
                 }
-                paczkomat += line;
             }
         }
         paczkomat = paczkomat
@@ -35,7 +34,7 @@ public class App {
             String commands = scanner.nextLine();
             String[] com = commands.split(";");
             if (commands.equals("")) {
-                System.out.println(paczkomat);
+//                System.out.println(paczkomat);
                 break;
             }
             if (commands.equals("T")) {
@@ -89,34 +88,35 @@ public class App {
                     break;
                 case "BL":
                     break;
+            }
+            switch (comm) {
+                case "B":
+                    //brak break; => to samo co dla BS się wykona :)
+                case "BS":
+                    //puste paczkomaty (bez właściciela)
+                    if (paczkomat.contains("S:O")) {
+                        paczkomat = paczkomat.replaceFirst("S:O", "S:X");
+                    } else if (paczkomat.contains("M:O")) {
+                        paczkomat = paczkomat.replaceFirst("M:O", "M:S");
+                    } else if (paczkomat.contains("L:O")) {
+                        paczkomat = paczkomat.replaceFirst("L:O", "L:S");
+                    }
+                    break;
+                case "BM":
+                    if (paczkomat.contains("M:O" + name)) {
+                        paczkomat = paczkomat.replaceFirst("M:O" + name, "M:X" + name);
+                    } else if (paczkomat.contains("L:O")) {
+                        paczkomat = paczkomat.replaceFirst("L:O" + name, "L:M" + name);
+                    }
+                    break;
+                case "BL":
+                    if (paczkomat.contains("L:O" + name)) {
+                        paczkomat = paczkomat.replaceFirst("L:O", "L:X");
+                    }
+                    break;
+            }
+            return paczkomat;
         }
-        switch (comm) {
-            case "B":
-                //brak break; => to samo co dla BS się wykona :)
-            case "BS":
-                //puste paczkomaty (bez właściciela)
-                if (paczkomat.contains("S:O")) {
-                    paczkomat = paczkomat.replaceFirst("S:O", "S:X");
-                } else if (paczkomat.contains("M:O")) {
-                    paczkomat = paczkomat.replaceFirst("M:O", "M:S");
-                } else if (paczkomat.contains("L:O")) {
-                    paczkomat = paczkomat.replaceFirst("L:O", "L:S");
-                }
-                break;
-            case "BM":
-                if (paczkomat.contains("M:O" + name)) {
-                    paczkomat = paczkomat.replaceFirst("M:O" + name, "M:X" + name);
-                } else if (paczkomat.contains("L:O")) {
-                    paczkomat = paczkomat.replaceFirst("L:O" + name, "L:M" + name);
-                }
-                break;
-            case "BL":
-                if (paczkomat.contains("L:O" + name)) {
-                    paczkomat = paczkomat.replaceFirst("L:O", "L:X");
-                }
-                break;
-        }
-        return paczkomat;
+        return paczkomat; //fixme
     }
-
 }
