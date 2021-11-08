@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class App {
+
     public static void main(String... args) {
         String paczkomat = "";
         Scanner scanner = new Scanner(System.in);
